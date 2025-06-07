@@ -15,7 +15,7 @@ struct DashboardView: View {
             ZStack {
                 switch selectedTab {
                 case .home:
-                    HomeView()
+                    HomeView(selectedTab: $selectedTab)
                 case .map:
                     MapView()
                 case .facility:

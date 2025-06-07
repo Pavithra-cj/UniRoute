@@ -9,10 +9,15 @@ import SwiftUI
 
 struct HomeView: View {
     @State private var hasUnreadNotifications = true
-    @State private var selectedTab: TabBar.TabItem = .home
+    @Binding var selectedTab: TabBar.TabItem
+    @State private var searchText = ""
     
     @StateObject private var mapViewModel = MapViewModel()
     @StateObject private var dashboardViewModel = DashboardViewModel()
+    
+    init(selectedTab: Binding<TabBar.TabItem> = .constant(.home)) {
+        self._selectedTab = selectedTab
+    }
     
     var body: some View {
         NavigationView {

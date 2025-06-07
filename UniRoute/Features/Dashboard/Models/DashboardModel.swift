@@ -29,7 +29,6 @@ struct Place: Equatable {
     var date: String = ""
     var image: String = "lecture_hall"
     
-    // Implementing Equatable manually to ensure proper comparison
     static func == (lhs: Place, rhs: Place) -> Bool {
         return lhs.name == rhs.name &&
         lhs.floor == rhs.floor &&
@@ -38,5 +37,12 @@ struct Place: Equatable {
         lhs.startTime == rhs.startTime &&
         lhs.date == rhs.date &&
         lhs.image == rhs.image
+    }
+    
+    struct RewardActivity {
+        var title: String
+        var points: Int
+        var date: String
+        var time: String
     }
 }
