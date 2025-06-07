@@ -36,7 +36,7 @@ class DashboardViewModel: ObservableObject {
             image: "canteen_image"
         ),
         Place(
-            name: "Harrison Hall",
+            name: "Cafetaria",
             floor: "5th block, computing faculty",
             distance: 400,
             crowdLevel: "Not Crowded",
@@ -126,12 +126,4 @@ class DashboardViewModel: ObservableObject {
             image: "canteen_image"
         )
     ]
-    
-    //    @Published var rewardHistory: [RewardActivity] = [
-    //        RewardActivity(title: "Credited as Dialog reload", points: 50, date: "01/02/2025", time: "13:30"),
-    //        RewardActivity(title: "Updated Canteen Crowd Level", points: 4, date: "01/02/2025", time: "13:30"),
-    //        RewardActivity(title: "Credited as Dialog reload", points: 50, date: "01/02/2025", time: "13:30"),
-    //        RewardActivity(title: "Updated Canteen Crowd Level", points: 4, date: "01/02/2025", time: "13:30"),
-    //        RewardActivity(title: "Credited as Dialog reload", points: 50, date: "01/02/2025", time: "13:30")
-    //    ]
 }
