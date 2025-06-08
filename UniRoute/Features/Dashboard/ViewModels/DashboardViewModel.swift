@@ -40,14 +40,14 @@ class DashboardViewModel: ObservableObject {
             floor: "5th block, computing faculty",
             distance: 400,
             crowdLevel: "Not Crowded",
-            image: "canteen_image"
+            image: "cafeteria_image"
         ),
         Place(
             name: "iOS Lab",
             floor: "5th block, computing faculty",
             distance: 400,
             crowdLevel: "Not Crowded",
-            image: "canteen_image"
+            image: "lecHall_image"
         )
     ]
     
