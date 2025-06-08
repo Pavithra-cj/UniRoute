@@ -14,6 +14,7 @@ struct LoginView: View {
     @State private var isPasswordValid = false
     @State private var isAuthenticated: Bool = false
     @State private var showingSignup: Bool = false
+    @State private var showingForgotPassword: Bool = false
     
     @State private var showLoginSuccess = false
     @State private var showLoginError = false
@@ -108,7 +109,7 @@ struct LoginView: View {
                     HStack{
                         Spacer()
                         Button(action: {
-                            PasswordResetFlow()
+                            showingForgotPassword = true
                         }) {
                             Text("Forgot Password ?")
                                 .font(
@@ -174,6 +175,9 @@ struct LoginView: View {
             }
             .navigationDestination(isPresented: $showingSignup) {
                 SignupView()
+            }
+            .navigationDestination(isPresented: $showingForgotPassword) {
+                PasswordResetFlow()
             }
         }
     }
