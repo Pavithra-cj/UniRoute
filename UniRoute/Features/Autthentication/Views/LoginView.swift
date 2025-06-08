@@ -107,7 +107,9 @@ struct LoginView: View {
                 VStack {
                     HStack{
                         Spacer()
-                        Button(action: {}) {
+                        Button(action: {
+                            PasswordResetFlow()
+                        }) {
                             Text("Forgot Password ?")
                                 .font(
                                     .system(size: 13, weight: .medium)
