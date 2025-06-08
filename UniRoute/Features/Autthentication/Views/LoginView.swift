@@ -33,11 +33,11 @@ struct LoginView: View {
                             .fill(Color.blue.opacity(0.2))
                             .frame(width: 90, height: 90)
                         
-//                        Image("logo")
-//                            .resizable()
-//                            .aspectRatio(contentMode: .fit)
-//                            .frame(width: 100,
-//                                   height: 100)
+                        Image("logo")
+                            .resizable()
+                            .aspectRatio(contentMode: .fit)
+                            .frame(width: 100,
+                                   height: 100)
                     }
                     HStack(spacing: 0){
                         Text("Uni")
