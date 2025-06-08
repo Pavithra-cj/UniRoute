@@ -22,6 +22,9 @@ struct SettingsView: View {
     @State private var showingLogoutAlert = false
     @State private var showingDeleteAccountAlert = false
     
+    @State private var shouldNavigateToLogin = false
+    @State private var showSignOutSuccess = false
+    
     @Environment(\.presentationMode) var presentationMode
     
     let themes = ["Light", "Dark", "System"]
@@ -421,7 +424,7 @@ struct SettingsView: View {
         }
         .background(Color(.systemGroupedBackground))
         .navigationBarHidden(true)
-//        .navigationBarTitleDisplayMode(.inline)
+        //        .navigationBarTitleDisplayMode(.inline)
         .sheet(isPresented: $showingThemePicker) {
             PickerSheet(
                 title: "Select Theme",
@@ -452,16 +455,48 @@ struct SettingsView: View {
         } message: {
             Text("This action cannot be undone. All your data will be permanently deleted.")
         }
+        .customToast(
+            isPresented: $showSignOutSuccess,
+            message: "Signed out successfully!",
+            style: .success
+        )
+        .navigationDestination(isPresented: $shouldNavigateToLogin) {
+            LoginView()
+                .navigationBarBackButtonHidden(true)
+        }
     }
     
     private func handleSignOut() {
         print("Signing out user...")
-        // Implement sign out logic
+        
+        clearUserData()
+        
+        showSignOutSuccess = true
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+            shouldNavigateToLogin = true
+        }
     }
     
     private func handleDeleteAccount() {
         print("Deleting user account...")
-        // Implement account deletion logic
+        
+        clearUserData()
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+            shouldNavigateToLogin = true
+        }
+    }
+    
+    private func clearUserData() {
+        UserDefaults.standard.removeObject(forKey: "userToken")
+        UserDefaults.standard.removeObject(forKey: "isLoggedIn")
+        UserDefaults.standard.removeObject(forKey: "userID")
+        UserDefaults.standard.removeObject(forKey: "campusID")
+        
+        UserDefaults.standard.synchronize()
+        
+        print("User data cleared successfully")
     }
 }
 
