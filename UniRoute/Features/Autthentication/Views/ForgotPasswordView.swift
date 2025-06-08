@@ -7,15 +7,13 @@
 
 import SwiftUI
 
-import SwiftUI
-
-// MARK: - Password Reset Flow Container
 struct PasswordResetFlow: View {
     @State private var currentStep: PasswordResetStep = .forgotPassword
     @State private var userEmail = ""
     @State private var otpCode = ""
     @State private var newPassword = ""
     @State private var confirmPassword = ""
+    @Environment(\.dismiss) private var dismiss
     
     enum PasswordResetStep {
         case forgotPassword
@@ -35,7 +33,7 @@ struct PasswordResetFlow: View {
                         }
                     },
                     onBack: {
-                        // Handle back to login
+                        dismiss()
                     }
                 )
                 
@@ -62,6 +60,7 @@ struct PasswordResetFlow: View {
                     onResetComplete: {
                         // Handle successful password reset
                         print("Password reset completed!")
+                        dismiss() 
                     },
                     onBack: {
                         withAnimation(.easeInOut(duration: 0.3)) {
@@ -75,7 +74,6 @@ struct PasswordResetFlow: View {
     }
 }
 
-// MARK: - Forgot Password View
 struct ForgotPasswordView: View {
     @Binding var email: String
     let onVerifyEmail: () -> Void
@@ -102,9 +100,7 @@ struct ForgotPasswordView: View {
             
             Spacer()
             
-            // Main Content
             VStack(spacing: 40) {
-                // Icon and Title
                 VStack(spacing: 24) {
                     ZStack {
                         Circle()
@@ -140,7 +136,6 @@ struct ForgotPasswordView: View {
                     }
                 }
                 
-                // Email Input
                 VStack(spacing: 20) {
                     VStack(alignment: .leading, spacing: 8) {
                         Text("University Email")
@@ -159,7 +154,6 @@ struct ForgotPasswordView: View {
                             .autocapitalization(.none)
                     }
                     
-                    // Verify Button
                     Button(action: {
                         isLoading = true
                         // Simulate API call
@@ -197,14 +191,13 @@ struct ForgotPasswordView: View {
     }
 }
 
-// MARK: - OTP Verification View
 struct OTPVerificationView: View {
     let email: String
     @Binding var otpCode: String
     let onVerifyOTP: () -> Void
     let onBack: () -> Void
     @State private var isLoading = false
-    @State private var timeRemaining = 123 // 01:23s
+    @State private var timeRemaining = 123
     @State private var timer: Timer?
     @State private var otpDigits: [String] = ["", "", "", ""]
     
@@ -228,7 +221,6 @@ struct OTPVerificationView: View {
             
             Spacer()
             
-            // Main Content
             VStack(spacing: 40) {
                 // Icon and Title
                 VStack(spacing: 24) {
@@ -241,7 +233,6 @@ struct OTPVerificationView: View {
                             .font(.system(size: 30, weight: .medium))
                             .foregroundColor(.blue)
                         
-                        // Password dots
                         HStack(spacing: 4) {
                             ForEach(0..<4, id: \.self) { _ in
                                 Circle()
@@ -364,7 +355,6 @@ struct OTPVerificationView: View {
     }
 }
 
-// MARK: - OTP Digit Field
 struct OTPDigitField: View {
     @Binding var digit: String
     let isActive: Bool
@@ -392,7 +382,6 @@ struct OTPDigitField: View {
     }
 }
 
-// MARK: - Reset Password View
 struct ResetPasswordView: View {
     @Binding var newPassword: String
     @Binding var confirmPassword: String
