@@ -11,7 +11,7 @@ import Combine
 class DashboardViewModel: ObservableObject {
     @Published var userName: String = "Rakshath"
     @Published var userID: String = "YR4COBBSC#####"
-    @Published var userEmail: String = "rakshath@student.nibm.lk"
+    @Published var userEmail: String = "rudra@student.nibm.lk"
     @Published var userPoints: Int = 50
     
     @Published var nextEvent: Event = Event(

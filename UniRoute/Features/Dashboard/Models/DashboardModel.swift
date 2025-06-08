@@ -20,7 +20,8 @@ struct Event {
     var floor: String
 }
 
-struct Place: Equatable {
+struct Place: Equatable, Identifiable {
+    var id = UUID()
     var name: String
     var floor: String
     var distance: Int

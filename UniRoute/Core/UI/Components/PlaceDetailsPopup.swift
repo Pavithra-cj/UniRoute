@@ -30,194 +30,197 @@ struct PlaceDetailPopup: View {
                     presentationMode.wrappedValue.dismiss()
                 }
             
-            VStack(spacing: 0) {
-                ZStack(alignment: .topTrailing) {
-                    Image(place.image)
-                        .resizable()
-                        .aspectRatio(contentMode: .fill)
-                        .frame(height: 180)
-                        .clipped()
-                        .cornerRadius(16, corners: [.topLeft, .topRight])
-                    
-                    Button(action: {
-                        isFavorite.toggle()
-                    }) {
-                        Image(systemName: isFavorite ? "heart.fill" : "heart")
-                            .foregroundColor(isFavorite ? .red : .white)
-                            .padding(8)
-                            .background(Circle().fill(Color.white.opacity(0.7)))
-                    }
-                    .padding(16)
-                }
-                
-                VStack(alignment: .leading, spacing: 16) {
-                    VStack(alignment: .leading, spacing: 8) {
-                        Text(place.name)
-                            .font(.title2)
-                            .fontWeight(.bold)
+            ScrollView {
+                VStack(spacing: 0) {
+                    ZStack(alignment: .topTrailing) {
+                        Image(place.image)
+                            .resizable()
+                            .aspectRatio(contentMode: .fill)
+                            .frame(height: 180)
+                            .clipped()
+                            .cornerRadius(16, corners: [.topLeft, .topRight])
                         
-                        HStack {
-                            Image(systemName: "mappin.circle.fill")
-                                .foregroundColor(.blue)
-                            Text(place.floor)
-                                .font(.subheadline)
-                                .foregroundColor(.gray)
+                        Button(action: {
+                            isFavorite.toggle()
+                        }) {
+                            Image(systemName: isFavorite ? "heart.fill" : "heart")
+                                .foregroundColor(isFavorite ? .red : .white)
+                                .padding(8)
+                                .background(Circle().fill(Color.white.opacity(0.7)))
                         }
-                        
-                        HStack {
-                            Image(systemName: "ruler")
-                                .foregroundColor(.blue)
-                            Text("\(place.distance) meters away")
-                                .font(.subheadline)
-                                .foregroundColor(.gray)
-                        }
-                        
-                        HStack {
-                            Image(systemName: "clock")
-                                .foregroundColor(.blue)
-                            Text(estimatedTime)
-                                .font(.subheadline)
-                                .foregroundColor(.gray)
-                        }
+                        .padding(16)
                     }
                     
-                    Divider()
-                    
-                    if !place.crowdLevel.isEmpty {
+                    VStack(alignment: .leading, spacing: 16) {
                         VStack(alignment: .leading, spacing: 8) {
-                            Text("Crowd Level")
-                                .font(.headline)
-                                .fontWeight(.semibold)
+                            Text(place.name)
+                                .font(.title2)
+                                .fontWeight(.bold)
                             
                             HStack {
-                                Text(selectedCrowdLevel)
-                                    .font(.subheadline)
-                                    .fontWeight(.medium)
-                                    .foregroundColor(crowdLevelColor(for: selectedCrowdLevel))
-                                    .padding(.horizontal, 12)
-                                    .padding(.vertical, 6)
-                                    .background(crowdLevelColor(for: selectedCrowdLevel).opacity(0.1))
-                                    .cornerRadius(8)
-                                
-                                Spacer()
-                            }
-                            
-                            VStack(alignment: .leading, spacing: 4) {
-                                Text("Crowd Trend Today")
+                                Image(systemName: "mappin.circle.fill")
+                                    .foregroundColor(.blue)
+                                Text(place.floor)
                                     .font(.subheadline)
                                     .foregroundColor(.gray)
-                                
-                                CrowdLevelGraph(crowdLevel: selectedCrowdLevel)
-                                    .frame(height: 100)
-                                    .padding(.vertical, 8)
+                            }
+                            
+                            HStack {
+                                Image(systemName: "ruler")
+                                    .foregroundColor(.blue)
+                                Text("\(place.distance) meters away")
+                                    .font(.subheadline)
+                                    .foregroundColor(.gray)
+                            }
+                            
+                            HStack {
+                                Image(systemName: "clock")
+                                    .foregroundColor(.blue)
+                                Text(estimatedTime)
+                                    .font(.subheadline)
+                                    .foregroundColor(.gray)
                             }
                         }
                         
                         Divider()
-                    }
-                    
-                    if !place.startTime.isEmpty && !place.date.isEmpty {
-                        VStack(alignment: .leading, spacing: 8) {
-                            Text("Schedule")
+                        
+                        if !place.crowdLevel.isEmpty {
+                            VStack(alignment: .leading, spacing: 8) {
+                                Text("Crowd Level")
+                                    .font(.headline)
+                                    .fontWeight(.semibold)
+                                
+                                HStack {
+                                    Text(selectedCrowdLevel)
+                                        .font(.subheadline)
+                                        .fontWeight(.medium)
+                                        .foregroundColor(crowdLevelColor(for: selectedCrowdLevel))
+                                        .padding(.horizontal, 12)
+                                        .padding(.vertical, 6)
+                                        .background(crowdLevelColor(for: selectedCrowdLevel).opacity(0.1))
+                                        .cornerRadius(8)
+                                    
+                                    Spacer()
+                                }
+                                
+                                VStack(alignment: .leading, spacing: 4) {
+                                    Text("Crowd Trend Today")
+                                        .font(.subheadline)
+                                        .foregroundColor(.gray)
+                                    
+                                    CrowdLevelGraph(crowdLevel: selectedCrowdLevel)
+                                        .frame(height: 100)
+                                        .padding(.vertical, 8)
+                                }
+                            }
+                            
+                            Divider()
+                        }
+                        
+                        if !place.startTime.isEmpty && !place.date.isEmpty {
+                            VStack(alignment: .leading, spacing: 8) {
+                                Text("Schedule")
+                                    .font(.headline)
+                                    .fontWeight(.semibold)
+                                
+                                HStack(spacing: 16) {
+                                    VStack(alignment: .leading, spacing: 4) {
+                                        Text("Date")
+                                            .font(.subheadline)
+                                            .foregroundColor(.gray)
+                                        Text(place.date)
+                                            .font(.subheadline)
+                                            .fontWeight(.medium)
+                                    }
+                                    
+                                    VStack(alignment: .leading, spacing: 4) {
+                                        Text("Time")
+                                            .font(.subheadline)
+                                            .foregroundColor(.gray)
+                                        Text(place.startTime)
+                                            .font(.subheadline)
+                                            .fontWeight(.medium)
+                                    }
+                                }
+                            }
+                            
+                            Divider()
+                        }
+                        
+                        VStack(alignment: .leading, spacing: 10) {
+                            Text("Update Current Crowd Level")
                                 .font(.headline)
                                 .fontWeight(.semibold)
                             
-                            HStack(spacing: 16) {
-                                VStack(alignment: .leading, spacing: 4) {
-                                    Text("Date")
-                                        .font(.subheadline)
-                                        .foregroundColor(.gray)
-                                    Text(place.date)
-                                        .font(.subheadline)
-                                        .fontWeight(.medium)
+                            Text("Help others by sharing how crowded it is right now")
+                                .font(.subheadline)
+                                .foregroundColor(.gray)
+                            
+                            HStack(spacing: 8) {
+                                CrowdLevelButton(
+                                    title: "Not Crowded",
+                                    isSelected: selectedCrowdLevel == "Not Crowded",
+                                    color: .green
+                                ) {
+                                    selectedCrowdLevel = "Not Crowded"
                                 }
                                 
-                                VStack(alignment: .leading, spacing: 4) {
-                                    Text("Time")
-                                        .font(.subheadline)
-                                        .foregroundColor(.gray)
-                                    Text(place.startTime)
-                                        .font(.subheadline)
-                                        .fontWeight(.medium)
+                                CrowdLevelButton(
+                                    title: "Moderate",
+                                    isSelected: selectedCrowdLevel == "Moderate",
+                                    color: .yellow
+                                ) {
+                                    selectedCrowdLevel = "Moderate"
+                                }
+                                
+                                CrowdLevelButton(
+                                    title: "Crowded",
+                                    isSelected: selectedCrowdLevel == "Crowded",
+                                    color: .orange
+                                ) {
+                                    selectedCrowdLevel = "Crowded"
+                                }
+                                
+                                CrowdLevelButton(
+                                    title: "Very Crowded",
+                                    isSelected: selectedCrowdLevel == "Very Crowded",
+                                    color: .red
+                                ) {
+                                    selectedCrowdLevel = "Very Crowded"
                                 }
                             }
+                            .padding(.vertical, 4)
                         }
                         
                         Divider()
-                    }
-                    
-                    VStack(alignment: .leading, spacing: 10) {
-                        Text("Update Current Crowd Level")
+                        
+                        Button(action: {
+                            mapViewModel.navigateToPlace(place)
+                            
+                            if let selectedTab = selectedTab {
+                                self.selectedTab = .map
+                            }
+                            
+                            presentationMode.wrappedValue.dismiss()
+                        }) {
+                            HStack {
+                                Image(systemName: "location.fill")
+                                Text("Navigate")
+                            }
                             .font(.headline)
                             .fontWeight(.semibold)
-                        
-                        Text("Help others by sharing how crowded it is right now")
-                            .font(.subheadline)
-                            .foregroundColor(.gray)
-                        
-                        HStack(spacing: 8) {
-                            CrowdLevelButton(
-                                title: "Not Crowded",
-                                isSelected: selectedCrowdLevel == "Not Crowded",
-                                color: .green
-                            ) {
-                                selectedCrowdLevel = "Not Crowded"
-                            }
-                            
-                            CrowdLevelButton(
-                                title: "Moderate",
-                                isSelected: selectedCrowdLevel == "Moderate",
-                                color: .yellow
-                            ) {
-                                selectedCrowdLevel = "Moderate"
-                            }
-                            
-                            CrowdLevelButton(
-                                title: "Crowded",
-                                isSelected: selectedCrowdLevel == "Crowded",
-                                color: .orange
-                            ) {
-                                selectedCrowdLevel = "Crowded"
-                            }
-                            
-                            CrowdLevelButton(
-                                title: "Very Crowded",
-                                isSelected: selectedCrowdLevel == "Very Crowded",
-                                color: .red
-                            ) {
-                                selectedCrowdLevel = "Very Crowded"
-                            }
+                            .foregroundColor(.white)
+                            .frame(maxWidth: .infinity)
+                            .padding(.vertical, 14)
+                            .background(Color.blue)
+                            .cornerRadius(12)
                         }
-                        .padding(.vertical, 4)
                     }
-                    
-                    Divider()
-                    
-                    Button(action: {
-                        mapViewModel.navigateToPlace(place)
-                        
-                        if let selectedTab = selectedTab {
-                            self.selectedTab = .map
-                        }
-                        
-                        presentationMode.wrappedValue.dismiss()
-                    }) {
-                        HStack {
-                            Image(systemName: "location.fill")
-                            Text("Navigate")
-                        }
-                        .font(.headline)
-                        .fontWeight(.semibold)
-                        .foregroundColor(.white)
-                        .frame(maxWidth: .infinity)
-                        .padding(.vertical, 14)
-                        .background(Color.blue)
-                        .cornerRadius(12)
-                    }
+                    .padding(20)
+                    .background(Color.white)
                 }
-                .padding(20)
             }
-            .background(Color.white)
+            .background(Color.clear) // Transparent background for ScrollView
             .cornerRadius(16)
             .shadow(color: Color.black.opacity(0.2), radius: 10, x: 0, y: 5)
             .padding(.horizontal, 20)
